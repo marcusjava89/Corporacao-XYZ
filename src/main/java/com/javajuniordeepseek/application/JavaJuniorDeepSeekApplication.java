@@ -9,12 +9,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @SpringBootApplication
 @EntityScan(basePackages = "com.javajuniordeepseek.model")
 @ComponentScan(basePackages = "com.*")
-//@EnableJpaRepositories(basePackages = "loja.estudo.spring.repository")
+@EnableJpaRepositories(basePackages = "com.javajuniordeepseek.repository")
 @EnableTransactionManagement
+@Slf4j
 public class JavaJuniorDeepSeekApplication {
 
 	public static void main(String[] args) { 
@@ -23,7 +26,6 @@ public class JavaJuniorDeepSeekApplication {
 		
 		SpringApplication.run(JavaJuniorDeepSeekApplication.class, args);
 		log.info("Conectado Corporação XYZ.");
-		System.out.println("Conexão corporação XYZ.");
 	}
 
 }

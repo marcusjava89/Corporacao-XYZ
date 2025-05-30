@@ -15,6 +15,11 @@ import jakarta.transaction.Transactional;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	
 	@Query("select u from Cliente u where upper(trim(u.nome)) like %?1%")
-	List<Cliente> listagemClientes(String nome); 		
+	List<Cliente> buscaNome(String nome); 		
 	
+	@Query("select u from Cliente u where trim(u.email) = ?1 ")
+	Cliente buscaPorEmail(String email);
+	
+	@Query("select a.email from Cliente a")
+	List<String> listaEmail();
 }
