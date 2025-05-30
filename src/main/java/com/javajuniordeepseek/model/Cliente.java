@@ -14,14 +14,14 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "clientes")
-@SequenceGenerator(name = "seq_clientes", sequenceName = "seq_clientes", initialValue = 1, allocationSize = 1)
-public class Clientes implements Serializable{
+@Table(name = "cliente")
+@SequenceGenerator(name = "seq_cliente", sequenceName = "seq_cliente", initialValue = 1, allocationSize = 1)
+public class Cliente implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_clientes")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cliente")
 	private Long id;
 	
 	@Column(nullable = false)
@@ -104,7 +104,7 @@ public class Clientes implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Clientes other = (Clientes) obj;
+		Cliente other = (Cliente) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
