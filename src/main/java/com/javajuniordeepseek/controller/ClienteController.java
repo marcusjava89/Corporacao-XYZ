@@ -3,8 +3,6 @@ package com.javajuniordeepseek.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties.Http;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javajuniordeepseek.model.Cliente;
 import com.javajuniordeepseek.repository.ClienteRepository;
 
-
 @Controller
 @RestController
 public class ClienteController {
@@ -29,9 +26,25 @@ public class ClienteController {
 	
 	@PostMapping(value = "/salvarCliente") 
 	@ResponseBody
-	public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente){
-		Cliente clienteSalvo = clienteRepository.save(cliente);
-		return new ResponseEntity<Cliente>(clienteSalvo, HttpStatus.OK);
+	public ResponseEntity<?> salvarCliente(@RequestBody Cliente cliente){
+		
+		if(cliente.getNome() == null || cliente.getNome().trim().equals("")){
+			return new ResponseEntity<String>("Nome não pode ser vazio", HttpStatus.BAD_REQUEST);
+		}
+			
+		if(cliente.getEmail() == null || cliente.getEmail().trim().equals("")) {
+			return new ResponseEntity<String>("Email não pode ser vazio", HttpStatus.BAD_REQUEST);
+		}
+		
+		Cliente clienteObtido = clienteRepository.buscaPorEmail(cliente.getEmail());
+		
+		if(clienteObtido != null) {
+			return new ResponseEntity<String>("Email já utilizado por outro cliente.", HttpStatus.CONFLICT);
+		}
+		
+		Cliente clienteNovo = clienteRepository.save(cliente);
+		return new ResponseEntity<Cliente>(clienteNovo, HttpStatus.CREATED);
+		
 	}
 	
 	/*Deletar cliente.*/
@@ -53,9 +66,14 @@ public class ClienteController {
 	/*Obter cliente por id*/
 	@GetMapping(value = "/obterCliente/{id}")
 	@ResponseBody
-	public ResponseEntity<Cliente> obterCliente(@PathVariable("id") Long id){
+	public ResponseEntity<?> obterCliente(@PathVariable("id") Long id){
 		
 		Cliente clienteObtido = clienteRepository.findById(id).get();
+		
+		if(clienteObtido == null) {
+			return new ResponseEntity<String>("Cliente não encontrado", HttpStatus.NOT_FOUND);
+		}
+		
 		return new ResponseEntity<Cliente>(clienteObtido, HttpStatus.OK);
 	}
 	
@@ -67,6 +85,15 @@ public class ClienteController {
 		return new ResponseEntity<List<Cliente>>(listaClientes, HttpStatus.OK);
 	}
 	
-	
+	/*Buscar por cliente com parte do nome.*/
+	@GetMapping(value = "/buscarPorNome/{nome}")
+	@ResponseBody
+	public ResponseEntity<?> buscarPorNome(@PathVariable("nome") String nome){
+		List<Cliente> listaDeEncontrados = clienteRepository.buscaNome(nome);
+		return new ResponseEntity<List<Cliente>>(listaDeEncontrados, HttpStatus.OK);
+	}
 	
 }
+
+
+

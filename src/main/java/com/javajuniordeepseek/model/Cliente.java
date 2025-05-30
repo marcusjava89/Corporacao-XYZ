@@ -12,6 +12,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "cliente")
@@ -27,6 +28,7 @@ public class Cliente implements Serializable{
 	@Column(nullable = false)
 	private String nome;
 	
+	@Email(message = "Formato de email inválido")
 	@Column(nullable = false)
 	private String email;
 	
