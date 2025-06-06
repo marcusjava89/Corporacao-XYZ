@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @SpringBootApplication
 @EntityScan(basePackages = "com.javajuniordeepseek.model")
 @ComponentScan(basePackages = "com.*")
