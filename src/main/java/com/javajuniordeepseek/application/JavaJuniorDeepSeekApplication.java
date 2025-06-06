@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 @ComponentScan(basePackages = "com.*")
 @EnableJpaRepositories(basePackages = "com.javajuniordeepseek.repository")
 @EnableTransactionManagement
-@Slf4j
 public class JavaJuniorDeepSeekApplication {
 
 	public static void main(String[] args) { 
