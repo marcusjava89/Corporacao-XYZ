@@ -26,6 +26,7 @@ public class JavaJuniorDeepSeekApplication {
 		
 		SpringApplication.run(JavaJuniorDeepSeekApplication.class, args);
 		log.info("Conectado Corporação XYZ.");
+		System.out.println("Conectado corporação XYZ.");
 	}
 
 }

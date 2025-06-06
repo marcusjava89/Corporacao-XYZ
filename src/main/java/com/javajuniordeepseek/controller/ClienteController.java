@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javajuniordeepseek.exception.ClienteNotFoundException;
 import com.javajuniordeepseek.model.Cliente;
 import com.javajuniordeepseek.repository.ClienteRepository;
 
@@ -63,18 +64,14 @@ public class ClienteController {
 		return new ResponseEntity<String>("Cliente deletado pelo id", HttpStatus.OK);
 	}
 	
-	/*Obter cliente por id*/
+	/*Obter cliente por id lançando exceção caso não encontre.*/
 	@GetMapping(value = "/obterCliente/{id}")
 	@ResponseBody
-	public ResponseEntity<?> obterCliente(@PathVariable("id") Long id){
+	public ResponseEntity<?> obterCliente(@PathVariable("id") Long id) throws ClienteNotFoundException{
 		
-		Cliente clienteObtido = clienteRepository.findById(id).get();
+		Cliente clienteObtido = clienteRepository.findById(id).orElseThrow(() -> new ClienteNotFoundException(id));
+		return ResponseEntity.ok(clienteObtido);
 		
-		if(clienteObtido == null) {
-			return new ResponseEntity<String>("Cliente não encontrado", HttpStatus.NOT_FOUND);
-		}
-		
-		return new ResponseEntity<Cliente>(clienteObtido, HttpStatus.OK);
 	}
 	
 	/*Listar clientes*/
