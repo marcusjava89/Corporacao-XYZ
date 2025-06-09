@@ -121,6 +121,38 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 		
 	}
 	
+	@Test
+	public void testarObterClienteEncontrado() throws JsonProcessingException, Exception{
+		
+		clienteRepository.deleteAll();
+						
+		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
+		MockMvc mockMvc = builder.build();
+		
+		Cliente cliente = new Cliente();
+		cliente.setNome("Marcus2");
+		cliente.setEmail("marcusjpa6@hotmail.com");
+		cliente.setTelefone("(21)8645-0456");
+		cliente.setDataDeCadastro(java.sql.Date.valueOf("2025-09-10"));
+		clienteRepository.save(cliente);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders.get("/obterCliente/"+cliente.getId())
+				.content(mapper.writeValueAsString(cliente))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+		
+		System.out.println("Retorno da API: " + retornoApi.andReturn().getResponse().getContentAsString());
+		System.out.println("Retorno status: "+retornoApi.andReturn().getResponse().getStatus());
+		
+		Cliente clienteObtido = mapper.readValue(retornoApi.andReturn().getResponse().getContentAsString(), Cliente.class);
+		
+		assertEquals(cliente.getNome(), clienteObtido.getNome());
+		assertEquals(200, retornoApi.andReturn().getResponse().getStatus());
+		
+	}
+	
 }
 
 
