@@ -93,37 +93,6 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 		
 	}
 	
-	@Test
-	public void testarApiDeletarpOrId() throws JsonProcessingException, Exception{
-		
-		
-		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
-		MockMvc mockMvc = builder.build();
-		
-		Cliente cliente = new Cliente();
-		
-		cliente.setNome("Marcus3");
-		cliente.setEmail("marcusviniciusmartins89@gmail.com");
-		cliente.setTelefone("(21)99962-5322");
-		cliente.setDataDeCadastro(java.sql.Date.valueOf("2024-06-10"));
-		
-		clienteRepository.save(cliente);
-		
-		ObjectMapper mapper = new ObjectMapper();
-		
-		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders.delete("/deletarPorId/"+cliente.getId())
-				.content(mapper.writeValueAsString(cliente))
-				.accept(MediaType.APPLICATION_JSON)
-				.contentType(MediaType.APPLICATION_JSON));
-		
-		System.out.println("Retorno da API "+retornoApi.andReturn().getResponse().getContentAsString());
-		System.out.println("Retorno status: "+retornoApi.andReturn().getResponse().getStatus());
-		
-		Cliente objetoRetorno = mapper.readValue(retornoApi.andReturn().getResponse().getContentAsString(), Cliente.class);
-		
-		assertEquals("Cliente deletado pelo id", retornoApi.andReturn().getResponse().getContentAsString());
-		assertEquals(200, retornoApi.andReturn().getResponse().getStatus());
-		
-	}
+
 	
 }

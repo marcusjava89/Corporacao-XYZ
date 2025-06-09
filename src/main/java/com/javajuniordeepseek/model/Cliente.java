@@ -40,7 +40,7 @@ public class Cliente implements Serializable{
 	private Date dataDeCadastro;
 	
 	@Column(nullable = false)
-	private Boolean ativo = true;
+	private Boolean ativo = true; //Cliente é criado ativo
 
 	public Long getId() {
 		return id;
