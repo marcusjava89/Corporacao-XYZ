@@ -64,13 +64,12 @@ public class ClienteController {
 		return new ResponseEntity<String>("Cliente deletado pelo id", HttpStatus.OK);
 	}
 	
-	/*Obter cliente por id lançando exceção caso não encontre.*/
-	@GetMapping(value = "/obterCliente/{id}")
+	@GetMapping(value = "/obterCliente/{id}")/*Obter cliente por id lançando exceção caso não encontre.*/
 	@ResponseBody
 	public ResponseEntity<?> obterCliente(@PathVariable("id") Long id) throws ClienteNotFoundException{
 		
 		Cliente clienteObtido = clienteRepository.findById(id).orElseThrow(() -> new ClienteNotFoundException(id));
-		return ResponseEntity.ok(clienteObtido);
+		return new ResponseEntity<Cliente>(clienteObtido,HttpStatus.OK);
 		
 	}
 	
