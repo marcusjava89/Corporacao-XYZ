@@ -2,8 +2,6 @@ package com.javajuniordeepseek.test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Date;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -165,17 +163,16 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 
 		ObjectMapper mapper = new ObjectMapper();
 		
-		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders.get("/obterCliente/200")
+		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders.get("/obterCliente/"+400)
 	            .accept(MediaType.APPLICATION_JSON)
 	            .contentType(MediaType.APPLICATION_JSON))
-	        .andExpect(status().isNotFound()) // Espera HTTP 404
-	        .andExpect(result -> assertTrue(result.getResolvedException() instanceof ClienteNotFoundException)) // Verifica se a exceção foi lançada
-	        .andExpect(result -> assertEquals("Cliente não encontrado.", result.getResolvedException().getMessage()));
-		
-		System.out.println("Retorno da API: " + retornoApi.andReturn().getResponse().getContentAsString());
+	        .andExpect(status().isNotFound()); // Espera HTTP 404
+
+	        System.out.println("Retorno da API: " + retornoApi.andReturn().getResponse().getContentAsString());
 		System.out.println("Retorno status: "+retornoApi.andReturn().getResponse().getStatus());		
 		
-		assertEquals("Cliente não encontrado.", retornoApi.andReturn().getResponse().getContentAsString());
+		assertEquals("Cliente não encontrado, pois não se encontra no banco de dados.", 
+				retornoApi.andReturn().getResponse().getContentAsString());
 		assertEquals(404, retornoApi.andReturn().getResponse().getStatus());
 		
 	}

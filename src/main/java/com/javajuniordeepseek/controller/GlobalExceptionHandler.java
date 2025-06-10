@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.javajuniordeepseek.exception.ClienteNotFoundException;
 
-@RestControllerAdvice
+@RestControllerAdvice //Essa anotação faz com que a classe intercepte exceções lançadas por qualquer @RestController do seu projeto.
 public class GlobalExceptionHandler {
-	 @ExceptionHandler(ClienteNotFoundException.class)
+	 @ExceptionHandler(ClienteNotFoundException.class) //será executado sempre que a exceção ClienteNotFoundException for lançada em
+	 //qualquer controller.*/
 	    public ResponseEntity<String> handleClienteNotFoundException(ClienteNotFoundException ex) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 	    }
