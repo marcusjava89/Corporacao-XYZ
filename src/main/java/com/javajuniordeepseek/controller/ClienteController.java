@@ -68,7 +68,7 @@ public class ClienteController {
 	@ResponseBody
 	public ResponseEntity<?> obterCliente(@PathVariable("id") Long id) throws ClienteNotFoundException{
 		
-		Cliente clienteObtido = clienteRepository.findById(id).orElseThrow(() -> new ClienteNotFoundException(id));
+		Cliente clienteObtido = clienteRepository.findById(id).orElseThrow(() -> new ClienteNotFoundException());
 		return new ResponseEntity<Cliente>(clienteObtido, HttpStatus.OK);
 		
 	}
