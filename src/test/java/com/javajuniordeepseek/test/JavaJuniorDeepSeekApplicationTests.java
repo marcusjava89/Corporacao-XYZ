@@ -2,6 +2,8 @@ package com.javajuniordeepseek.test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,9 +16,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javajuniordeepseek.application.JavaJuniorDeepSeekApplication;
-import com.javajuniordeepseek.exception.ClienteNotFoundException;
 import com.javajuniordeepseek.model.Cliente;
 import com.javajuniordeepseek.repository.ClienteRepository;
 
@@ -124,7 +126,7 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 	
 	@Test
 	public void testarObterClienteEncontrado() throws JsonProcessingException, Exception{
-		
+		//Teste buscar e encontrar um cliente retornando o cliente pelo id
 		clienteRepository.deleteAll();
 						
 		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
@@ -156,17 +158,18 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 	
 	@Test
 	public void testarObterClienteNaoEncontrado() throws JsonProcessingException, Exception{
-		System.out.println("Teste de cliente não encontrado");
 		
+		//Testa o caso que cliente não é encontrado e retorna mensagem de não encontrado
 		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
 		MockMvc mockMvc = builder.build();
 
 		ObjectMapper mapper = new ObjectMapper();
 		
-		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders.get("/obterCliente/"+400)
+		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders
+				.get("/obterCliente/"+400)
 	            .accept(MediaType.APPLICATION_JSON)
 	            .contentType(MediaType.APPLICATION_JSON))
-	        .andExpect(status().isNotFound()); // Espera HTTP 404
+	        .andExpect(status().isNotFound()); 
 
 	        System.out.println("Retorno da API: " + retornoApi.andReturn().getResponse().getContentAsString());
 		System.out.println("Retorno status: "+retornoApi.andReturn().getResponse().getStatus());		
@@ -174,6 +177,40 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 		assertEquals("Cliente não encontrado, pois não se encontra no banco de dados.", 
 				retornoApi.andReturn().getResponse().getContentAsString());
 		assertEquals(404, retornoApi.andReturn().getResponse().getStatus());
+		
+	}
+	
+	@Test
+	public void testarListarClientes() throws JsonProcessingException, Exception{
+		//Testa se é retornada uma lista de clientes.
+		clienteRepository.deleteAll();
+						
+		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
+		MockMvc mockMvc = builder.build();
+		
+		Cliente cliente = new Cliente();
+		cliente.setNome("Marcus2");
+		cliente.setEmail("marcusjpa6@hotmail.com");
+		cliente.setTelefone("(21)8645-0456");
+		cliente.setDataDeCadastro(java.sql.Date.valueOf("2025-09-10"));
+		clienteRepository.save(cliente);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders
+				.get("/listarClientes")
+				.content(mapper.writeValueAsString(cliente))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+		
+		//Desserializar a lista que é o objeto retornoApi
+		
+		List<Cliente> retornoApiList = mapper.readValue(retornoApi.andReturn()
+				.getResponse()
+				.getContentAsString(), new TypeReference<List<Cliente>>() {});
+		
+		assertEquals(1, retornoApiList.size());
+		assertEquals(cliente.getNome(), retornoApiList.get(0).getNome());
 		
 	}
 		
