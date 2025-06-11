@@ -213,6 +213,42 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 		assertEquals(cliente.getNome(), retornoApiList.get(0).getNome());
 		
 	}
+	
+	@Test
+	public void testarBuscarPorNome() throws JsonProcessingException, Exception{
+		//Testa se é retornada uma lista com parte daquele nome.
+		clienteRepository.deleteAll();
+						
+		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
+		MockMvc mockMvc = builder.build();
+		
+		Cliente cliente = new Cliente();
+		cliente.setNome("Teste de busca por nome");
+		cliente.setEmail("marcusjpa6@hotmail.com");
+		cliente.setTelefone("(21)8645-0456");
+		cliente.setDataDeCadastro(java.sql.Date.valueOf("2025-09-10"));
+		clienteRepository.save(cliente);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders
+				.get("/buscarPorNome/de")
+				.content(mapper.writeValueAsString(cliente))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+		
+		//Desserializar a lista com os parte dos nomes que é o objeto retornoApi
+		List<Cliente> retornoApiList = mapper.readValue(retornoApi.andReturn()
+				.getResponse()
+				.getContentAsString(), new TypeReference<List<Cliente>>() {});
+		
+		System.out.println("Retorno status: " + 
+		retornoApi.andReturn().getResponse().getStatus());
+		
+		assertEquals(1, retornoApiList.size());
+		
+		
+	}
 		
 }
 

@@ -27,7 +27,7 @@ public class ClienteController {
 	
 	@PostMapping(value = "/salvarCliente") 
 	@ResponseBody
-	public ResponseEntity<?> salvarCliente(@RequestBody Cliente cliente){
+	public ResponseEntity<?> salvarCliente(@RequestBody Cliente cliente){ //Teste feito
 		
 		if(cliente.getNome() == null || cliente.getNome().trim().equals("")){
 			return new ResponseEntity<String>("Nome não pode ser vazio", HttpStatus.BAD_REQUEST);
@@ -51,7 +51,7 @@ public class ClienteController {
 	/*Deletar cliente.*/
 	@DeleteMapping(value = "/deletarCliente")
 	@ResponseBody
-	public ResponseEntity<String> deletarCliente(@RequestBody Cliente cliente){
+	public ResponseEntity<String> deletarCliente(@RequestBody Cliente cliente){ //Teste feito
 		clienteRepository.deleteById(cliente.getId());
 		return new ResponseEntity<String>("Cliente deletado com sucesso.", HttpStatus.OK);
 	}
@@ -59,7 +59,7 @@ public class ClienteController {
 	/*Deletar pelo id*/
 	@DeleteMapping(value = "/deletarPorId/{id}")
 	@ResponseBody
-	public ResponseEntity<String> deletarPorId(@PathVariable("id") Long id){
+	public ResponseEntity<String> deletarPorId(@PathVariable("id") Long id){ //Teste feito
 		clienteRepository.deleteById(id);	
 		return new ResponseEntity<String>("Cliente deletado pelo id", HttpStatus.OK);
 	}
@@ -70,13 +70,12 @@ public class ClienteController {
 		
 		Cliente clienteObtido = clienteRepository.findById(id).orElseThrow(() -> new ClienteNotFoundException());
 		return new ResponseEntity<Cliente>(clienteObtido, HttpStatus.OK);
-		
 	}
 	
 	/*Listar clientes*/
 	@GetMapping(value = "/listarClientes")
 	@ResponseBody
-	public ResponseEntity<List<Cliente>> listarClientes(){
+	public ResponseEntity<List<Cliente>> listarClientes(){ //Teste feito
 		List<Cliente> listaClientes = clienteRepository.findAll();
 		return new ResponseEntity<List<Cliente>>(listaClientes, HttpStatus.OK);
 	}
