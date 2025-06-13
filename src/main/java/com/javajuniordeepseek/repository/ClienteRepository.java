@@ -16,7 +16,8 @@ import jakarta.transaction.Transactional;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	
 	//método antigo não buscou uma lista de nomes com parte do nome dado
-	@Query("SELECT u FROM Cliente u WHERE UPPER(u.nome) LIKE UPPER(CONCAT('%', TRIM(:nome), '%'))")
+	@Query("SELECT u FROM Cliente u WHERE UPPER(u.nome) "
+			+ "LIKE UPPER(CONCAT('%', TRIM(:nome), '%'))")
 	List<Cliente> buscaNome(@Param("nome") String nome);
 	
 	@Query("select u from Cliente u where trim(u.email) = ?1 ")

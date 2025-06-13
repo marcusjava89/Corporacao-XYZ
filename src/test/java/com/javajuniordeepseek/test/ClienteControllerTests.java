@@ -26,7 +26,7 @@ import junit.framework.TestCase;
 
 
 @SpringBootTest(classes = JavaJuniorDeepSeekApplication.class)
-class JavaJuniorDeepSeekApplicationTests extends TestCase{
+class ClienteControllerTests extends TestCase{
 
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -36,6 +36,9 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 	
 	@Test
 	public void testarApiSalvarCliente() throws JsonProcessingException, Exception{
+		
+		System.out.println(" ");
+		System.out.println("Testa endpoint salvarCliente.");
 		
 		clienteRepository.deleteAll();
 		
@@ -72,6 +75,9 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 	
 	@Test
 	public void testarApiDeletarCliente() throws JsonProcessingException, Exception{
+		
+		System.out.println(" ");
+		System.out.println("Testa endpoint deletarCliente.");
 						
 		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
 		MockMvc mockMvc = builder.build();
@@ -99,6 +105,9 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 	
 	@Test
 	public void testarApiDeletarPorId() throws JsonProcessingException, Exception{
+		
+		System.out.println(" ");
+		System.out.println("Testa endpoint deletarClientePorId.");
 						
 		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
 		MockMvc mockMvc = builder.build();
@@ -112,7 +121,8 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
-		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders.delete("/deletarPorId/"+cliente.getId())
+		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders
+				.delete("/deletarPorId/"+cliente.getId())
 				.content(mapper.writeValueAsString(cliente))
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON));
@@ -126,7 +136,10 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 	
 	@Test
 	public void testarObterClienteEncontrado() throws JsonProcessingException, Exception{
-		//Teste buscar e encontrar um cliente retornando o cliente pelo id
+		
+		System.out.println(" ");
+		System.out.println("Testa endpoint obterCliente, encopntrando cliente.");
+		
 		clienteRepository.deleteAll();
 						
 		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
@@ -159,11 +172,11 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 	@Test
 	public void testarObterClienteNaoEncontrado() throws JsonProcessingException, Exception{
 		
-		//Testa o caso que cliente não é encontrado e retorna mensagem de não encontrado
+		System.out.println(" ");
+		System.out.println("Testa endpoint obterCliente, não encontrando cliente.");
+		
 		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
 		MockMvc mockMvc = builder.build();
-
-		ObjectMapper mapper = new ObjectMapper();
 		
 		ResultActions retornoApi = mockMvc.perform(MockMvcRequestBuilders
 				.get("/obterCliente/"+400)
@@ -182,7 +195,10 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 	
 	@Test
 	public void testarListarClientes() throws JsonProcessingException, Exception{
-		//Testa se é retornada uma lista de clientes.
+
+		System.out.println(" ");
+		System.out.println("Testa endpoint listarClientes.");
+		
 		clienteRepository.deleteAll();
 						
 		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
@@ -216,7 +232,10 @@ class JavaJuniorDeepSeekApplicationTests extends TestCase{
 	
 	@Test
 	public void testarBuscarPorNome() throws JsonProcessingException, Exception{
-		//Testa se é retornada uma lista com parte daquele nome.
+
+		System.out.println(" ");
+		System.out.println("Testa endpoint buscarPorNome.");
+		
 		clienteRepository.deleteAll();
 						
 		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);

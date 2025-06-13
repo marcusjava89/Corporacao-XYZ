@@ -30,19 +30,21 @@ public class ClienteController {
 	@PostMapping(value = "/salvarCliente") 
 	@ResponseBody
 	public ResponseEntity<?> salvarCliente(@Valid @RequestBody Cliente cliente){ //Teste feito
-		
+		//@Valid para validar o NotBlank.
 		if(cliente.getNome() == null || cliente.getNome().trim().equals("")){
 			return new ResponseEntity<String>("Nome não pode ser vazio", HttpStatus.BAD_REQUEST);
 		}
 			
 		if(cliente.getEmail() == null || cliente.getEmail().trim().equals("")) {
-			return new ResponseEntity<String>("Email não pode ser vazio", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Email não pode ser vazio", 
+					HttpStatus.BAD_REQUEST);
 		}
 		
 		Cliente clienteObtido = clienteRepository.buscaPorEmail(cliente.getEmail());
 		
 		if(clienteObtido != null) {
-			return new ResponseEntity<String>("Email já utilizado por outro cliente.", HttpStatus.CONFLICT);
+			return new ResponseEntity<String>("Email já utilizado por outro cliente.", 
+					HttpStatus.CONFLICT);
 		}
 		
 		Cliente clienteNovo = clienteRepository.save(cliente);
@@ -66,11 +68,13 @@ public class ClienteController {
 		return new ResponseEntity<String>("Cliente deletado pelo id", HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/obterCliente/{id}")/*Obter cliente por id lançando exceção caso não encontre.*/
+	@GetMapping(value = "/obterCliente/{id}")
 	@ResponseBody
-	public ResponseEntity<?> obterCliente(@PathVariable("id") Long id) throws ClienteNotFoundException{
+	public ResponseEntity<?> obterCliente(@PathVariable("id") Long id) throws 
+	ClienteNotFoundException{
 		
-		Cliente clienteObtido = clienteRepository.findById(id).orElseThrow(() -> new ClienteNotFoundException());
+		Cliente clienteObtido = clienteRepository
+				.findById(id).orElseThrow(() -> new ClienteNotFoundException());
 		return new ResponseEntity<Cliente>(clienteObtido, HttpStatus.OK);
 	}
 	
@@ -85,10 +89,12 @@ public class ClienteController {
 	/*Buscar por cliente com parte do nome.*/
 	@GetMapping(value = "/buscarPorNome/{nome}")
 	@ResponseBody
-	public ResponseEntity<?> buscarPorNome(@PathVariable("nome") String nome){
+	public ResponseEntity<?> buscarPorNome(@PathVariable("nome") String nome){ //Teste feito
 		List<Cliente> listaDeEncontrados = clienteRepository.buscaNome(nome);
 		return new ResponseEntity<List<Cliente>>(listaDeEncontrados, HttpStatus.OK);
 	}
+	
+	
 	
 }
 

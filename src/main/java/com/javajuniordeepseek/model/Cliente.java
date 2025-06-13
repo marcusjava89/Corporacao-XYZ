@@ -29,7 +29,7 @@ public class Cliente implements Serializable{
 	@NotBlank(message = "Campo do nome não pode ser vazio.")
 	private String nome;
 	
-	@Email(message = "Formato de e-mailinválido.")
+	@Email(message = "Formato de e-mail inválido.")
 	@NotBlank(message = "E-mail obrigatório.")
 	private String email;
 	
