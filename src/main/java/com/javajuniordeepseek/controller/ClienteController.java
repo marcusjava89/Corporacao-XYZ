@@ -18,6 +18,8 @@ import com.javajuniordeepseek.exception.ClienteNotFoundException;
 import com.javajuniordeepseek.model.Cliente;
 import com.javajuniordeepseek.repository.ClienteRepository;
 
+import jakarta.validation.Valid;
+
 @Controller
 @RestController
 public class ClienteController {
@@ -27,7 +29,7 @@ public class ClienteController {
 	
 	@PostMapping(value = "/salvarCliente") 
 	@ResponseBody
-	public ResponseEntity<?> salvarCliente(@RequestBody Cliente cliente){ //Teste feito
+	public ResponseEntity<?> salvarCliente(@Valid @RequestBody Cliente cliente){ //Teste feito
 		
 		if(cliente.getNome() == null || cliente.getNome().trim().equals("")){
 			return new ResponseEntity<String>("Nome não pode ser vazio", HttpStatus.BAD_REQUEST);

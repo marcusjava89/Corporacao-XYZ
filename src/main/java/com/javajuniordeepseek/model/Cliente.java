@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "cliente")
@@ -24,15 +25,15 @@ public class Cliente implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_cliente")
 	private Long id;
-	
-	@Column(nullable = false)
+
+	@NotBlank(message = "Campo do nome não pode ser vazio.")
 	private String nome;
 	
-	@Email(message = "Formato de email inválido")
-	@Column(nullable = false)
+	@Email(message = "Formato de e-mailinválido.")
+	@NotBlank(message = "E-mail obrigatório.")
 	private String email;
 	
-	@Column(nullable = false)
+	@NotBlank(message = "Telefone não pode ser vazio.")
 	private String telefone;
 	
 	@Column(nullable = false)
