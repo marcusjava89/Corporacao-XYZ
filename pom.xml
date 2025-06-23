@@ -7,7 +7,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.0</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository. -->
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>javajuniordeepseek</artifactId>
@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.6.0</version> <!-- Versão mais recente -->
+			<version>42.6.0</version> <!-- Versão mais recente. -->
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -72,7 +72,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Para ObjectMapper no teste do Controller -->
+		<!-- Para ObjectMapper no teste do Controller. -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -83,7 +83,7 @@
 
 	<build>
 		<plugins>
-			<!-- Plugin para corrigir o parent -->
+			<!-- Plugin para corrigir o parent. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
