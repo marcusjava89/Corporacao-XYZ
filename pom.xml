@@ -41,6 +41,7 @@
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
 
+	<!-- Para a anotação @Valid. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
@@ -71,8 +72,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!--
-		https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<!-- Para ObjectMapper no teste do Controller -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
