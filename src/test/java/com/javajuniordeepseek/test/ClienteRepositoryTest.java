@@ -20,7 +20,8 @@ public class ClienteRepositoryTest {
 
 	@Test
 	public void testarBuscaNomeEncontrado() {
-
+		
+		System.out.println(" ");
 		clienteRepository.deleteAll();
 
 		Cliente cliente = new Cliente();
@@ -45,14 +46,16 @@ public class ClienteRepositoryTest {
 		clienteRepository.save(cliente3);
 
 		List<Cliente> resposta = clienteRepository.buscaNome("silva");
-
+		
+		assertEquals("Fulano da Silva", resposta.get(0).getNome());
 		assertEquals(2, resposta.size());
 
 	}
 
 	@Test
 	public void testarNomeBuscaNaoEncontrado() {
-
+		
+		System.out.println(" ");
 		clienteRepository.deleteAll();
 
 		Cliente cliente = new Cliente();
@@ -81,5 +84,12 @@ public class ClienteRepositoryTest {
 		assertEquals(0, resposta.size());
 
 	}
+	
+	
 
 }
+
+
+
+
+
