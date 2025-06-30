@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javajuniordeepseek.exception.ArgumentoInvalidoException;
 import com.javajuniordeepseek.exception.ClienteNaoEncontradoException;
 import com.javajuniordeepseek.model.Cliente;
 import com.javajuniordeepseek.repository.ClienteRepository;
@@ -29,14 +30,14 @@ public class ClienteController {
 	
 	@PostMapping(value = "/salvarCliente") 
 	@ResponseBody
-	public ResponseEntity<?> salvarCliente(@Valid @RequestBody Cliente cliente){ //Teste feito
-		if(cliente.getNome() == null || cliente.getNome().trim().equals("")){
-			return new ResponseEntity<String>("Nome não pode ser vazio", HttpStatus.BAD_REQUEST);
+	public ResponseEntity<?> salvarCliente(@Valid @RequestBody Cliente cliente) 
+			throws ArgumentoInvalidoException{ 
+		if(cliente.getNome() == null || cliente.getNome().trim().isEmpty()){
+			throw new ArgumentoInvalidoException("nome");
 		}
 			
 		if(cliente.getEmail() == null || cliente.getEmail().trim().equals("")) {
-			return new ResponseEntity<String>("Email não pode ser vazio", 
-					HttpStatus.BAD_REQUEST);
+			throw new ArgumentoInvalidoException("email");
 		}
 		
 		Cliente clienteObtido = clienteRepository.buscaPorEmail(cliente.getEmail());
