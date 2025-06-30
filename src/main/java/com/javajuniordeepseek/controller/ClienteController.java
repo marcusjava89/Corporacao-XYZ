@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javajuniordeepseek.exception.ClienteNotFoundException;
+import com.javajuniordeepseek.exception.ClienteNaoEncontradoException;
 import com.javajuniordeepseek.model.Cliente;
 import com.javajuniordeepseek.repository.ClienteRepository;
 
@@ -30,7 +30,6 @@ public class ClienteController {
 	@PostMapping(value = "/salvarCliente") 
 	@ResponseBody
 	public ResponseEntity<?> salvarCliente(@Valid @RequestBody Cliente cliente){ //Teste feito
-		//@Valid para validar o NotBlank.
 		if(cliente.getNome() == null || cliente.getNome().trim().equals("")){
 			return new ResponseEntity<String>("Nome não pode ser vazio", HttpStatus.BAD_REQUEST);
 		}
@@ -71,10 +70,10 @@ public class ClienteController {
 	@GetMapping(value = "/obterCliente/{id}")
 	@ResponseBody
 	public ResponseEntity<?> obterCliente(@PathVariable("id") Long id) throws 
-	ClienteNotFoundException{
+	ClienteNaoEncontradoException{
 		
 		Cliente clienteObtido = clienteRepository
-				.findById(id).orElseThrow(() -> new ClienteNotFoundException());
+				.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException());
 		return new ResponseEntity<Cliente>(clienteObtido, HttpStatus.OK);
 	}
 	

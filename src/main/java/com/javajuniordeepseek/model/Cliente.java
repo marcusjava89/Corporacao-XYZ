@@ -17,7 +17,8 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "cliente")
-@SequenceGenerator(name = "seq_cliente", sequenceName = "seq_cliente", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "seq_cliente", sequenceName = "seq_cliente", initialValue = 1, 
+allocationSize = 1)
 public class Cliente implements Serializable{
 
 	private static final long serialVersionUID = 1L;

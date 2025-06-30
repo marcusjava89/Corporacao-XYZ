@@ -24,7 +24,6 @@ import com.javajuniordeepseek.repository.ClienteRepository;
 
 import junit.framework.TestCase;
 
-
 @SpringBootTest(classes = JavaJuniorDeepSeekApplication.class)
 class ClienteControllerTests extends TestCase{
 

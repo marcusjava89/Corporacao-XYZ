@@ -20,6 +20,4 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 	@Query("select u from Cliente u where trim(u.email) = ?1 ")
 	public Cliente buscaPorEmail(String email);
 	
-	@Query("select a.email from Cliente a")
-	public List<String> listaEmail();
 }
