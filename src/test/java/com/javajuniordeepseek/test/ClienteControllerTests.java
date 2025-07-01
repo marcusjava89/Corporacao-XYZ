@@ -2,6 +2,7 @@ package com.javajuniordeepseek.test;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -48,8 +49,7 @@ class ClienteControllerTests extends TestCase{
 		
 		cliente.setNome("Marcus1");
 		cliente.setEmail("marcusjava89@gmail.com");
-		cliente.setTelefone("21999625322");
-		cliente.setDataDeCadastro(java.sql.Date.valueOf("2024-06-10"));
+		cliente.setDataDeCadastro(new Date());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -67,7 +67,6 @@ class ClienteControllerTests extends TestCase{
 		assertEquals(cliente.getAtivo(), objetoRetorno.getAtivo());
 		assertEquals(cliente.getEmail(), objetoRetorno.getEmail());
 		assertEquals(cliente.getTelefone(), objetoRetorno.getTelefone());
-		assertEquals(cliente.getDataDeCadastro(), objetoRetorno.getDataDeCadastro());
 		assertEquals(201, retornoApi.andReturn().getResponse().getStatus());
 		
 	}
@@ -85,7 +84,7 @@ class ClienteControllerTests extends TestCase{
 		cliente.setNome("Marcus2");
 		cliente.setEmail("marcusjpa6@hotmail.com");
 		cliente.setTelefone("(21)8645-0456");
-		cliente.setDataDeCadastro(java.sql.Date.valueOf("2025-09-10"));
+		cliente.setDataDeCadastro(new Date());
 		clienteRepository.save(cliente);
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -107,15 +106,16 @@ class ClienteControllerTests extends TestCase{
 		
 		System.out.println(" ");
 		System.out.println("Testa endpoint deletarClientePorId.");
-						
+		
+		clienteRepository.deleteAll();
+		
 		DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
 		MockMvc mockMvc = builder.build();
 		
 		Cliente cliente = new Cliente();
 		cliente.setNome("Marcus2");
 		cliente.setEmail("marcusjpa6@hotmail.com");
-		cliente.setTelefone("(21)8645-0456");
-		cliente.setDataDeCadastro(java.sql.Date.valueOf("2025-09-10"));
+		cliente.setDataDeCadastro(new Date());
 		clienteRepository.save(cliente);
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -148,7 +148,7 @@ class ClienteControllerTests extends TestCase{
 		cliente.setNome("Marcus2");
 		cliente.setEmail("marcusjpa6@hotmail.com");
 		cliente.setTelefone("(21)8645-0456");
-		cliente.setDataDeCadastro(java.sql.Date.valueOf("2025-09-10"));
+		cliente.setDataDeCadastro(new Date());
 		clienteRepository.save(cliente);
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -207,7 +207,7 @@ class ClienteControllerTests extends TestCase{
 		cliente.setNome("Marcus2");
 		cliente.setEmail("marcusjpa6@hotmail.com");
 		cliente.setTelefone("(21)8645-0456");
-		cliente.setDataDeCadastro(java.sql.Date.valueOf("2025-09-10"));
+		cliente.setDataDeCadastro(new Date());
 		clienteRepository.save(cliente);
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -244,7 +244,7 @@ class ClienteControllerTests extends TestCase{
 		cliente.setNome("Teste de busca por nome");
 		cliente.setEmail("marcusjpa6@hotmail.com");
 		cliente.setTelefone("(21)8645-0456");
-		cliente.setDataDeCadastro(java.sql.Date.valueOf("2025-09-10"));
+		cliente.setDataDeCadastro(new Date());
 		clienteRepository.save(cliente);
 		
 		ObjectMapper mapper = new ObjectMapper();

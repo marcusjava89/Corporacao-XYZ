@@ -32,9 +32,10 @@ public class Cliente implements Serializable{
 	
 	@Email(message = "Formato de e-mail inválido.")
 	@NotBlank(message = "E-mail obrigatório.")
+	@Column(unique = true)
 	private String email;
 	
-	@NotBlank(message = "Telefone não pode ser vazio.")
+	/*Telefone não obrigatório porque toda comunicação pode ser feita por e-mail.*/
 	private String telefone;
 	
 	@Column(nullable = false)
