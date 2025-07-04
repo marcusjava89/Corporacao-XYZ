@@ -78,7 +78,19 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.17.1</version>
 		</dependency>
-	
+
+		<!-- 2 Dependências para o spring security. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope> <!-- Recomendado: só é necessário em testes -->
+		</dependency>
+
 	</dependencies>
 
 	<build>
